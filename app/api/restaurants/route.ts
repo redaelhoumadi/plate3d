@@ -1,0 +1,12 @@
+import { prisma } from "@/lib/prisma";
+
+export async function GET() {
+
+ const restaurants = await prisma.restaurant.findMany({
+  include:{
+   menus:true
+  }
+ });
+
+ return Response.json(restaurants);
+}
