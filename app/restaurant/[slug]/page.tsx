@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import MenuItemCard from "@/app/components/MenuItemCard";
+import MenuItemCard from "@/src/components/MenuItemCard";
 
 type RestaurantPageProps = {
   params: Promise<{
@@ -47,61 +47,71 @@ export default async function RestaurantPage({
   }
 
   return (
-    <main className="min-h-screen bg-white">
-      <section className="border-b border-gray-200 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-6 py-12">
+    <main className="min-h-screen bg-[#fcfcfb]">
+      <section className="border-b border-gray-200 bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
           <Link
             href="/"
-            className="mb-6 inline-flex text-sm font-medium text-gray-600 hover:text-black"
+            className="mb-6 inline-flex text-sm font-medium text-gray-500 transition hover:text-black"
           >
-            ← Retour à l’accueil
+            ← Retour
           </Link>
 
-          <div className="space-y-4">
+          <div className="max-w-3xl space-y-4">
             <span className="inline-flex rounded-full bg-black px-4 py-2 text-sm font-medium text-white">
               Plate3D Demo
             </span>
-            <h1 className="text-4xl font-extrabold text-gray-900">
+
+            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
               {restaurant.name}
             </h1>
-            <p className="max-w-2xl text-lg text-gray-600">
-              Découvrez le menu digital du restaurant et préparez l’intégration
-              des plats en 3D.
+
+            <p className="text-lg leading-8 text-gray-600">
+              Découvrez le menu du restaurant avec une expérience immersive :
+              visualisation des plats, aperçu 3D et réalité augmentée sur
+              mobile.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-12">
+      <section className="mx-auto max-w-7xl px-6 py-12 md:py-16">
         {restaurant.menus.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-gray-300 p-10 text-center text-gray-500">
-            Aucun menu disponible pour ce restaurant.
+          <div className="rounded-[28px] border border-dashed border-gray-300 bg-white p-12 text-center text-gray-500">
+            Aucun menu disponible.
           </div>
         ) : (
           <div className="space-y-14">
             {restaurant.menus.map((menu) => (
               <div key={menu.id} className="space-y-10">
-                <div>
-                  <h2 className="text-3xl font-bold text-gray-900">{menu.name}</h2>
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-medium uppercase tracking-[0.2em] text-gray-400">
+                      Menu
+                    </p>
+                    <h2 className="mt-2 text-3xl font-bold tracking-tight text-gray-900">
+                      {menu.name}
+                    </h2>
+                  </div>
                 </div>
 
                 {menu.categories.length === 0 ? (
-                  <div className="rounded-2xl border border-dashed border-gray-300 p-8 text-gray-500">
-                    Aucune catégorie dans ce menu.
+                  <div className="rounded-[24px] border border-dashed border-gray-300 bg-white p-8 text-gray-500">
+                    Aucune catégorie disponible.
                   </div>
                 ) : (
                   <div className="space-y-12">
                     {menu.categories.map((category) => (
                       <div key={category.id} className="space-y-6">
                         <div className="flex items-center gap-3">
-                          <div className="h-2 w-2 rounded-full bg-black" />
+                          <div className="h-2.5 w-2.5 rounded-full bg-black" />
                           <h3 className="text-2xl font-semibold text-gray-900">
                             {category.name}
                           </h3>
                         </div>
 
                         {category.items.length === 0 ? (
-                          <div className="rounded-2xl border border-dashed border-gray-300 p-8 text-gray-500">
+                          <div className="rounded-[24px] border border-dashed border-gray-300 bg-white p-8 text-gray-500">
                             Aucun plat dans cette catégorie.
                           </div>
                         ) : (
